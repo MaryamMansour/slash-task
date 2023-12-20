@@ -74,7 +74,7 @@ class ProductModel extends Product {
   String? createdAt;
   String? updatedAt;
   dynamic deletedAt;
-  double? productRating;
+  int? productRating;
   int? estimatedDaysPreparing;
   Brand? brands;
   List<ProductVariations>? productVariations;

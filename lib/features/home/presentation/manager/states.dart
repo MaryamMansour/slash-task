@@ -16,6 +16,5 @@ class HomeGetProductsSuccessState extends HomeStates {
 
 class HomeGetProductsErrorState extends HomeStates {
   Failures failures;
-
   HomeGetProductsErrorState(this.failures);
 }

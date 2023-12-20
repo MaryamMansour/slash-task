@@ -25,6 +25,7 @@ class HomeCubit extends Cubit<HomeStates> {
     GetProductsUseCase getProductsUseCase = GetProductsUseCase(homeDomainRepo);
     var result = await getProductsUseCase.call();
     result.fold((l) => {emit(HomeGetProductsErrorState(l))}, (r) {
+      print(r.product?.length.toString());
       products = r.product ?? [];
       emit(HomeGetProductsSuccessState(r));
     });

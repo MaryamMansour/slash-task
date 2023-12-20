@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:slash/features/home/data/models/productModel.dart';
+import 'package:slash/features/home/domain/entities/productDetails.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/product.dart';
@@ -11,6 +12,9 @@ class HomeDataRepo implements HomeDomainRepo{
 
   @override
   Future<Either<Failures, Respone>> getProducts() => homeDataSources.getProducts();
+
+  @override
+  Future<Either<Failures, ProductDetails>> getProductDetails(String productId)=>homeDataSources.getProductDetails(productId);
 
 
 }

@@ -45,7 +45,7 @@ class Product {
   int? id;
   String? name;
   String? description;
-  double? productRating;
+  int? productRating;
   Brand? brands;
   List<ProductVariations>? productVariations;
 

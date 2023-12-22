@@ -13,11 +13,11 @@ Clean Architecture
 Utilizes BLoC for business logic and Cubit for state management.
 
 # Bug Description
-Known UI rebuilding issue despite BLoC implementation. Unresolved as of now.
+There is a known bug in the project where the UI is not rebuilding as expected.
 
+Despite implementing selected variations and employing BLoC/Cubit for state management, the issue persists. As of this README update, the bug is yet to be resolved.
 # Work in Progress
-Progress made in Clean Architecture and BLoC. Future improvements, including constants and styles, planned post exams.
-
+While the project has made progress in implementing Clean Architecture and BLoC/Cubit for state management, there are areas that can be improved. Due to time constraints, not all potential enhancements have been addressed. Final exams are currently the priority, and as such, some refinements will be deferred until after this period.
 # Next Steps
 Bug Fixing: Resolve UI rebuilding issue.
 Code Refactoring: Enhance code quality.
@@ -29,3 +29,8 @@ Additional Features: (If time permits) Add constants and styles.
 <img src="screen/one.png"  width="210" height="450">
 
 <img src="screen/two.png"  width="210" height="450">
+
+
+# video
+
+https://drive.google.com/file/d/1w8LNRLoNEcOfvbCCXBzDbdrguEJUpCpb/view?usp=drivesdk

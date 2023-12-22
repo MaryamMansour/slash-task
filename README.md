@@ -1,16 +1,31 @@
 # slash
 
-A new Flutter project.
+This project follows Clean Architecture principles with BLoC state management. It consists of Data, Domain, and Presentation layers.
 
-## Getting Started
+# Architecture
+Clean Architecture
 
-This project is a starting point for a Flutter application.
+- Data Layer: Handles data operations.
+- Domain Layer: Contains business logic and use cases.
+- Presentation Layer: Manages UI logic and interactions.
+- BLoC Pattern with Cubit
 
-A few resources to get you started if this is your first Flutter project:
+Utilizes BLoC for business logic and Cubit for state management.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# Bug Description
+Known UI rebuilding issue despite BLoC implementation. Unresolved as of now.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Work in Progress
+Progress made in Clean Architecture and BLoC. Future improvements, including constants and styles, planned post exams.
+
+# Next Steps
+Bug Fixing: Resolve UI rebuilding issue.
+Code Refactoring: Enhance code quality.
+Documentation: Improve understanding.
+Optimizations: Implement performance improvements.
+Additional Features: (If time permits) Add constants and styles.
+
+
+<img src="screen/one.png"  width="210" height="450">
+
+<img src="screen/two.png"  width="210" height="450">

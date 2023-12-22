@@ -1,28 +1,56 @@
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import '../../../home/data/data_sources/data_source.dart';
 import '../../../home/domain/entities/productDetails.dart';
 import '../manager/cubit.dart';
 import '../manager/states.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../widgets/image_Slider.dart';
+
 class ProductDetailsScreen extends StatefulWidget {
   late int productId;
+
   ProductDetailsScreen(this.productId, {super.key});
+
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
 
+int selectedPrice = 0;
+String? selectedImage;
+
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ProductDetailsCubit.get(context).getProductDetails(widget.productId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ProductDetailsCubit(HomeRemoteDto())
         ..getProductDetails(widget.productId),
-      child: BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
-        listener: (context, state) {
+      child: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
+        builder: (context, state) {
           if (state is ProductDetailsError) {
             showDialog(
               context: context,
@@ -32,9 +60,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
             );
           }
-
-        },
-        builder: (context, state) {
           if (state is ProductDetailsLoaded) {
             return buildProductDetailsScreen(context, state.product);
           } else {
@@ -47,7 +72,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
     );
   }
-  Widget buildProductDetailsScreen(BuildContext context, ProductDetails product) {
+
+  Widget buildProductDetailsScreen(
+      BuildContext context, ProductDetails product) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -87,22 +114,27 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Colors.grey, width: 2),
+              buildComplexImageSlider(
+                ProductDetailsCubit.get(context).productVarientImages ?? [],
+              ),
+              SizedBox(height: 24),
+              Text(
+                ProductDetailsCubit.get(context).product?.data?.name ?? "",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20.sp,
+                  color: Colors.grey[800],
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.network(
-                    ProductDetailsCubit.get(context)
-                        .product?.data!.variations![0].productVarientImages?[0].imagePath ??
-                        "",
-                    height: 300,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
-                ),
+              ),
+              SizedBox(height: 16),
+              buildChoiceChips(
+                'Options',
+                ProductDetailsCubit.get(context)
+                    .product
+                    ?.data
+                    ?.avaiableProperties,
               ),
               SizedBox(height: 24),
               Text(
@@ -146,7 +178,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
                           decoration: BoxDecoration(
                             color: Colors.grey,
                             borderRadius: BorderRadius.circular(20),
@@ -158,7 +191,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   width: 24,
                                   height: 24,
                                   decoration: BoxDecoration(
-                                    border: Border.all(width: 2, color: Colors.white),
+                                    border: Border.all(
+                                        width: 2, color: Colors.white),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: const Center(
@@ -186,7 +220,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   width: 24,
                                   height: 24,
                                   decoration: BoxDecoration(
-                                    border: Border.all(width: 2, color: Colors.white),
+                                    border: Border.all(
+                                        width: 2, color: Colors.white),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: const Center(
@@ -223,7 +258,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   // });
                 },
                 child: Text(
-                  ProductDetailsCubit.get(context).product?.data?.description ?? "",
+                  ProductDetailsCubit.get(context).product?.data?.description ??
+                      "",
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
                   style: GoogleFonts.poppins(
@@ -249,7 +285,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                       SizedBox(height: 12),
                       Text(
-                        'EGP ${ProductDetailsCubit.get(context).product?.data!.variations?[0].price.toString()}',
+                        'EGP ${ProductDetailsCubit.get(context).selectedPrice}',
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w600,
                           fontSize: 20.sp,
@@ -266,7 +302,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         backgroundColor: Colors.grey[800],
-                        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 32),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 32),
                       ),
                       onPressed: () {},
                       child: Row(
@@ -295,4 +332,98 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
+  Widget buildChoiceChips(String label, List<AvaiableProperties>? properties) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w600,
+            fontSize: 18.sp,
+            color: const Color(0xff06004F),
+          ),
+        ),
+        SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: properties?.map((property) {
+                return buildPropertyChoiceChips(property);
+              }).toList() ??
+              [],
+        ),
+      ],
+    );
+  }
+
+  Widget buildPropertyChoiceChips(AvaiableProperties property) {
+    // Use a Set to ensure unique values
+    Set<String> uniqueValues = Set<String>();
+
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: property.values?.map((value) {
+            // Check if the value is unique before adding it
+            if (uniqueValues.add(value.value ?? "")) {
+              return ChoiceChip(
+                label: Text(
+                  value.value.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+                selected: false, // Set to true if the chip is selected
+                backgroundColor: Colors.grey,
+                onSelected: (bool selected) {
+                  backgroundColor:
+                  Colors.blue;
+
+                  updateProductDetails(property.property, value);
+                },
+              );
+            } else {
+              // Value is not unique, don't create a chip for it
+              return SizedBox.shrink();
+            }
+          }).toList() ??
+          [],
+    );
+  }
+
+  updateProductDetails(String? propertyName, Values selectedOption) {
+    ProductDetailsCubit cubit = ProductDetailsCubit.get(context);
+    ProductDetails? productDetails = cubit.product;
+
+    print(
+        "WHAT${ProductDetailsCubit.get(context).product?.data?.variations?.length}");
+    print(propertyName);
+    if (productDetails != null && propertyName != null) {
+      // Find the corresponding variation based on the selected option
+      Variations selectedVariation = findVariationByOption(
+        productDetails,
+        propertyName,
+        selectedOption,
+      );
+
+      ProductDetailsCubit.get(context).updateVariation(
+          selectedVariation.price, selectedVariation.productVarientImages);
+    }
+  }
+
+  Variations findVariationByOption(ProductDetails productDetails,
+      String? propertyName, Values selectedOption) {
+    List<Variations> variations = productDetails.data!.variations ?? [];
+
+    for (Variations variation in variations) {
+      List<ProductPropertiesValues> values =
+          variation.productPropertiesValues ?? [];
+      if (values.any((value) =>
+          value.property == propertyName &&
+          value.value == selectedOption.value)) {
+        return variation;
+      }
+    }
+
+    return variations.first;
+  }
 }

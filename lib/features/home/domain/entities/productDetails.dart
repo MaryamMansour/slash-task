@@ -12,8 +12,17 @@ class ProductDetails {
   Data? data;
   String? message;
   int? statusCode;
-
-
+  ProductDetails copyWith({
+    Data? data,
+    String? message,
+    int? statusCode,
+  }) {
+    return ProductDetails(
+      data: data ?? this.data,
+      message: message ?? this.message,
+      statusCode: statusCode ?? this.statusCode,
+    );
+  }
 
 }
 
@@ -60,6 +69,29 @@ class Data {
   String? brandName;
   String? brandImage;
 
+  Data copyWith({
+    int? id,
+    String? name,
+    String? description,
+    int? brandId,
+    int? productRating,
+    List<Variations>? variations,
+    List<AvaiableProperties>? avaiableProperties,
+    String? brandName,
+    String? brandImage,
+  }) {
+    return Data(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      brandId: brandId ?? this.brandId,
+      productRating: productRating ?? this.productRating,
+      variations: variations ?? this.variations,
+      avaiableProperties: avaiableProperties ?? this.avaiableProperties,
+      brandName: brandName ?? this.brandName,
+      brandImage: brandImage ?? this.brandImage,
+    );
+  }
 
 }
 
@@ -122,7 +154,7 @@ class Variations {
     if (json['ProductVarientImages'] != null) {
       productVarientImages = [];
       json['ProductVarientImages'].forEach((v) {
-        productVarientImages?.add(ProductVarientImages.fromJson(v));
+        productVarientImages?.add(ProductVarientImages2.fromJson(v));
       });
     }
     if (json['productPropertiesValues'] != null) {
@@ -137,9 +169,26 @@ class Variations {
   int? price;
   int? quantity;
   bool? inStock;
-  List<ProductVarientImages>? productVarientImages;
+  List<ProductVarientImages2>? productVarientImages;
   List<ProductPropertiesValues>? productPropertiesValues;
 
+  Variations copyWith({
+    int? id,
+    int? price,
+    int? quantity,
+    bool? inStock,
+    List<ProductVarientImages2>? productVarientImages,
+    List<ProductPropertiesValues>? productPropertiesValues,
+  }) {
+    return Variations(
+      id: id ?? this.id,
+      price: price ?? this.price,
+      quantity: quantity ?? this.quantity,
+      inStock: inStock ?? this.inStock,
+      productVarientImages: productVarientImages ?? this.productVarientImages,
+      productPropertiesValues: productPropertiesValues ?? this.productPropertiesValues,
+    );
+  }
 
 
 
@@ -161,12 +210,12 @@ class ProductPropertiesValues {
 
 }
 
-class ProductVarientImages {
-  ProductVarientImages({
+class ProductVarientImages2 {
+  ProductVarientImages2({
       this.id, 
       this.imagePath,});
 
-  ProductVarientImages.fromJson(dynamic json) {
+  ProductVarientImages2.fromJson(dynamic json) {
     id = json['id'];
     imagePath = json['image_path'];
   }

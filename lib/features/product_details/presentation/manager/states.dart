@@ -8,13 +8,23 @@ class ProductDetailsInit extends ProductDetailsState {}
 class ProductDetailsLoading extends ProductDetailsState {}
 
 class ProductDetailsLoaded extends ProductDetailsState {
-ProductDetails product;
+  final int? price;
+  final List<ProductVarientImages2>? img;
+  final ProductDetails product;
 
-  ProductDetailsLoaded(this.product);
+  ProductDetailsLoaded(this.price, this.img, this.product);
+}
+class ProductDetailsLoaded2 extends ProductDetailsState {
+  final int? price;
+  final List<ProductVarientImages2>? img;
+  final ProductDetails product;
+
+  ProductDetailsLoaded2(this.price, this.img, this.product);
 }
 
+
 class ProductDetailsError extends ProductDetailsState {
-  Failures failures;
+  final Failures failures;
 
   ProductDetailsError(this.failures);
 }

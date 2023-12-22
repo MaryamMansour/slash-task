@@ -2,6 +2,7 @@
 
 This project follows Clean Architecture principles with BLoC state management. It consists of Data, Domain, and Presentation layers.
 
+(The development of this project follows a Git branching model from the master branch there's the home branch)
 # Architecture
 Clean Architecture
 
